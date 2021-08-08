@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   monitor.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jinbekim <jinbekim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 14:05:25 by jinbekim          #+#    #+#             */
-/*   Updated: 2021/06/25 17:07:35 by jinbekim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "philo.h"
 
 static int	check_alive(t_philo *philo)
@@ -26,7 +14,7 @@ static int	check_alive(t_philo *philo)
 		+ (check_death.tv_usec - philo[i].start_eat_time.tv_usec) / 1000;
 		if (timepast > (uint64_t)philo[i].arg->ttd)
 		{
-			print_died_time(philo->start_time, i);
+			print(philo, DIE);
 			return (1);
 		}
 		i++;
@@ -45,6 +33,7 @@ static void	wait_to_die(t_philo *philo)
 	{
 		if (check_alive(philo) == 1)
 			break ;
+		usleep(100);
 	}
 }
 

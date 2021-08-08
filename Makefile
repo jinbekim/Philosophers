@@ -4,7 +4,7 @@ CFLAGS = -Wall -Werror -Wextra
 # DEBUG = -fsanitize=address
 SRC = set_env.c main.c ft_atoi.c\
 	print.c pthread_branch.c monitor.c\
-	routine.c
+	routine.c ft_usleep.c
 
 OBJ = $(SRC:.c=.o)
 

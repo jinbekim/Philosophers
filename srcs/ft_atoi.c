@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jinbekim <jinbekim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 09:50:51 by jinbekim          #+#    #+#             */
-/*   Updated: 2021/06/25 17:31:47 by jinbekim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "philo.h"
 
 static int			ft_isspace(int c)
@@ -51,21 +39,4 @@ int					ft_atoi(const char *s)
 		i++;
 	}
 	return (c);
-}
-
-void				ft_usleep(uint64_t ms)
-{
-	struct timeval	check;
-	uint64_t		time;
-	uint64_t		now;
-
-	gettimeofday(&check, NULL);
-	now = check.tv_sec * 1000 + check.tv_usec / 1000;
-	time = ms + now;
-	while (now < time)
-	{
-		gettimeofday(&check, NULL);
-		now = check.tv_sec * 1000 + check.tv_usec / 1000;
-		usleep(1000);
-	}
 }

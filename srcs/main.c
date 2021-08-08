@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jinbekim <jinbekim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/11 21:00:18 by jinbekim          #+#    #+#             */
-/*   Updated: 2021/07/02 16:05:14 by jinbekim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "philo.h"
 
 static int	check_argument(int ac, char **av)
@@ -23,21 +11,27 @@ static int	check_argument(int ac, char **av)
 	return (0);
 }
 
-static void	clean_table(t_env *env)
+int	clean_table(t_env *env)
 {
 	int	i;
 
-	i = 0;
-	while (i < env->arg->p_num)
-	{
-		pthread_mutex_unlock(&env->fork[i]);
-		printf("fork: %d\n", pthread_mutex_destroy(&env->fork[i]));
-		i++;
+	i = -1;
+	if (env->fork){
+		while (++i < env->arg->p_num){
+			pthread_mutex_unlock(&env->fork[i]);
+			pthread_mutex_destroy(&env->fork[i]);
+		}
+		free(env->fork);
 	}
-	free(env->fork);
-	free(env->philo);
-	free(env->arg);
-	free(env);
+	pthread_mutex_unlock(&env->printer);
+	pthread_mutex_destroy(&env->printer);
+	if (env->philo)
+		free(env->philo);
+	if (env->arg)
+		free(env->arg);
+	if (env)
+		free(env);
+	return (1);
 }
 
 int			main(int ac, char *av[])

@@ -22,6 +22,12 @@
 
 # define ERR 1
 
+# define FORK "has taken a fork"
+# define EAT "is eating."
+# define SLEEP "is sleeping"
+# define THINK "is thinking."
+# define DIE "died."
+
 /*
 ** e_arg
 ** number_of_philosophers
@@ -39,11 +45,6 @@ enum			e_arg{
 	OPT
 };
 
-enum			e_state{
-	ALIVE,
-	DEAD
-};
-
 typedef struct	s_arg{
 	int	p_num;
 	int	ttd;
@@ -56,10 +57,10 @@ typedef struct	s_arg{
 typedef struct	s_philo{
 	int				id;
 	int				eat_time;
-	enum e_state	survival;
 	t_arg			*arg;
 	pthread_mutex_t	*fork_right;
 	pthread_mutex_t	*fork_left;
+	pthread_mutex_t	*printer;
 	struct timeval	*start_time;
 	struct timeval	start_eat_time;
 }				t_philo;
@@ -68,6 +69,7 @@ typedef struct	s_env{
 	t_philo			*philo;
 	t_arg			*arg;
 	pthread_mutex_t	*fork;
+	pthread_mutex_t	printer;
 	struct timeval	start_time;
 }				t_env;
 
@@ -76,11 +78,8 @@ int				set_env(t_env **env, char **av);
 void			*routine(void *data);
 int				pthread_branch(t_env *philo);
 int				monitor_philos(t_env *philo);
-int				print_fork_time(struct timeval *start, int who);
-int				print_eating_time(struct timeval *start, int who);
-int				print_sleeping_time(struct timeval *start, int who);
-int				print_thinking_time(struct timeval *start, int who);
-int				print_died_time(struct timeval *start, int who);
-void			ft_usleep(uint64_t ms);
+int				print(t_philo* philo, const char* msg);
+int				clean_table(t_env *env);
+void			ft_usleep(int sleep);
 
 #endif
