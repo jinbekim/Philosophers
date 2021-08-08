@@ -1,24 +1,30 @@
+NAME = philo
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-NAME = philo
+# DEBUG = -fsanitize=address
+SRC = set_env.c main.c ft_atoi.c\
+	print.c pthread_branch.c monitor.c\
+	routine.c
 
-SRCS = philo.c
-OBJS = $(SRCS:.c=.o)
+OBJ = $(SRC:.c=.o)
+
+OBJS = $(addprefix ./objs/, $(OBJ))
+INC = -I./incs/
+
+./objs/%.o: ./srcs/%.c
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $?
 
 all: $(NAME)
 
-%.o : %.c
-	$(CC) $(CFLAGS) -o $@ -c $?
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(DEBUG) $(INC) -o $@ $^
 
-$(NAME): $(SRCS)
-	$(CC) $(CFLAGS) -o $@ $^
+clean:
+	rm -rf $(OBJS)
 
-clean :
-
-
-fclean : clean
+fclean: clean
 	rm -rf $(NAME)
 
-re : fclean all
+re: fclean all
 
 .PHONY: all clean fclean re
