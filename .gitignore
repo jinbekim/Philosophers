@@ -1,6 +1,4 @@
-
-./objs/
-!./objs/.keep
-
+objs/*
+!objs/.keep
 .DS_Store
 .vscode
