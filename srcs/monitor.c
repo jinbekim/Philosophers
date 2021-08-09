@@ -14,9 +14,10 @@ static int	check_alive(t_philo *philo)
 		+ (check_death.tv_usec - philo[i].start_eat_time.tv_usec) / 1000;
 		if (timepast > (uint64_t)philo[i].arg->ttd)
 		{
-			print(philo, DIE);
+			print(&philo[i], DIE);
 			return (1);
 		}
+		usleep(100);
 		i++;
 	}
 	return (0);
@@ -33,7 +34,6 @@ static void	wait_to_die(t_philo *philo)
 	{
 		if (check_alive(philo) == 1)
 			break ;
-		usleep(100);
 	}
 }
 

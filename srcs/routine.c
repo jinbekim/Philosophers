@@ -39,7 +39,6 @@ void				*routine(void *data)
 		print(philo, SLEEP);
 		ft_usleep(philo->arg->tts);
 		print(philo, THINK);
-		usleep(100);
 	}
 	return (NULL);
 }
